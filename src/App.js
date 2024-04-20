@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, HStack, VStack } from "native-base";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
+import AppContainer from "./components/AppContainer";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import LaunchScreen from "./screens/application/misc/LaunchScreen";
+import Protected from "./components/Protected";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Box>
+        <HStack>
+          <VStack>
+            <Header />
+            <AppContainer>
+              <Routes>
+                <Route path="/launch" element={<LaunchScreen />} />
+                <Route path="/login" element={<LaunchScreen />} />
+                <Route path="/signup" element={<LaunchScreen />} />
+                <Route element={<Protected user={null} allowedRoles={[]} />}>
+                  <Route path="/explore" element={<LaunchScreen />} />
+                </Route>
+                <Route path="/logout" element={<LaunchScreen />} />
+              </Routes>
+            </AppContainer>
+            <Footer />
+          </VStack>
+        </HStack>
+      </Box>
+    </Router>
   );
 }
 
